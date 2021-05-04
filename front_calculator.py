@@ -23,16 +23,20 @@ class Ui_MainWindow(object):
         self.btn1 = QtWidgets.QPushButton(self.centralwidget)
         self.btn1.setGeometry(QtCore.QRect(50, 140, 31, 31))
         self.btn1.setObjectName("btn1")
-        self.btn1.clicked.connect(lambda: self.result_textView.setText(self.btn1.text()))
+        self.btn1.clicked.connect(lambda: self.concat(self.btn1.text()))
         self.btn3 = QtWidgets.QPushButton(self.centralwidget)
         self.btn3.setGeometry(QtCore.QRect(130, 140, 31, 31))
         self.btn3.setObjectName("btn3")
+        self.btn3.clicked.connect(lambda: self.concat(self.btn3.text()))
         self.btn2 = QtWidgets.QPushButton(self.centralwidget)
         self.btn2.setGeometry(QtCore.QRect(90, 140, 31, 31))
         self.btn2.setObjectName("btn2")
+        self.btn2.clicked.connect(lambda: self.concat(self.btn2.text()))
         self.btn0 = QtWidgets.QPushButton(self.centralwidget)
         self.btn0.setGeometry(QtCore.QRect(50, 260, 31, 31))
         self.btn0.setObjectName("btn0")
+        self.btn0.clicked.connect(lambda: self.concat(self.btn0.text()))
+        
         self.btn6 = QtWidgets.QPushButton(self.centralwidget)
         self.btn6.setGeometry(QtCore.QRect(130, 180, 31, 31))
         self.btn6.setObjectName("btn6")
@@ -58,6 +62,7 @@ class Ui_MainWindow(object):
         self.btn_eql = QtWidgets.QPushButton(self.centralwidget)
         self.btn_eql.setGeometry(QtCore.QRect(130, 260, 31, 31))
         self.btn_eql.setObjectName("btn_eql")
+        self.btn_eql.clicked.connect(self.find_result)
         
         self.btn_div = QtWidgets.QPushButton(self.centralwidget)
         self.btn_div.setGeometry(QtCore.QRect(170, 140, 31, 31))
@@ -68,6 +73,8 @@ class Ui_MainWindow(object):
         self.btn_add = QtWidgets.QPushButton(self.centralwidget)
         self.btn_add.setGeometry(QtCore.QRect(170, 220, 31, 31))
         self.btn_add.setObjectName("btn_add")
+        self.btn_add.clicked.connect(lambda: self.concat(self.btn_add.text()))
+        
         self.btn_mul = QtWidgets.QPushButton(self.centralwidget)
         self.btn_mul.setGeometry(QtCore.QRect(170, 180, 31, 31))
         self.btn_mul.setObjectName("btn_mul")
@@ -75,6 +82,7 @@ class Ui_MainWindow(object):
         self.result_textView = QtWidgets.QTextBrowser(self.centralwidget)
         self.result_textView.setGeometry(QtCore.QRect(0, 10, 261, 61))
         self.result_textView.setObjectName("result_textView")
+
         
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -108,8 +116,22 @@ class Ui_MainWindow(object):
         self.btn_add.setText(_translate("MainWindow", "+"))
         self.btn_mul.setText(_translate("MainWindow", "*"))
     
-    def showOnTextView(self):
-        self.result_textView.setText("1")
+    def showOnTextView(self,var):
+        self.result_textView.setText(var)
+        
+    def concat(self, var):
+        prev_val = self.result_textView.toPlainText()
+        self.result_textView.setText(prev_val + var)
+    def find_result(self):
+        prev_val = self.result_textView.toPlainText()
+        if (prev_val != ""):
+            first = prev_val.split("+")[0]
+            second = prev_val.split("+")[1]
+            
+            res = int(first)+ int(second)
+            self.result_textView.setText(str(res))
+        else:
+            print("empty value cannot be operated!")
 
 if __name__ == "__main__":
     import sys
